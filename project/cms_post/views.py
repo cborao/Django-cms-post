@@ -6,22 +6,8 @@ from django.contrib.auth import logout
 from django.shortcuts import redirect, render
 from django.utils import timezone
 
-form = """
-<form action="" method="POST">
-    Value: <input type="text" name="value">
-    <br/><input type="submit" name="action" value="Send Content">
-</form>
-"""
 
-form2 = """
-<form action="" method="POST">
-    <br>Title: <input type="text" name="title">
-    <br>Body: <input type="text" name="body">
-     <br/><input type="submit" name="action" value="Send Comment">
-</form>
-"""
-
-
+@csrf_exempt
 def logged_in(request):
 
     if request.user.is_authenticated:
@@ -32,11 +18,13 @@ def logged_in(request):
     return HttpResponse(logged)
 
 
+@csrf_exempt
 def logout_view(request):
     logout(request)
     return redirect("/cms_post/")
 
 
+@csrf_exempt
 def login_view(request):
     return redirect("/login")
 
@@ -132,7 +120,7 @@ def get_content(request, key):
     except Content.DoesNotExist:
         response = 'There is no content for key: ' + key + '<br>'
         if request.user.is_authenticated:
-            response = form + "Logged in as " + request.user.username
+            response = "Logged in as " + request.user.username
         else:
             response = "<br>Not logged in. <a href='/login'>Login</a>"
         status = 404

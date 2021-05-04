@@ -17,4 +17,4 @@ class Comment(models.Model):
     date = models.DateTimeField('published')
 
     def __str__(self):
-        return self.content + ": " + self.title
+        return self.content.key + ": " + self.title
